@@ -4,7 +4,7 @@ services:
     restart: always
     command: gunicorn app.main:app -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8000
     ports:
-      - "8000:8000"
+      - "800:8000"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/fastapi_db
     depends_on:
