@@ -67,44 +67,6 @@ body::before {
   opacity: 0.14;
 }
 
-/* Improve dark theme consistency */
-.site-header {
-  background: rgba(11, 17, 23, 0.72);
-}
-
-.brand {
-  font-family: "Sora", sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-decoration: none;
-  color: var(--text);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 0.38rem 0.7rem;
-  background: rgba(16, 25, 35, 0.72);
-}
-
-.nav {
-  display: flex;
-  gap: 0.85rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
-.nav a {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 0.95rem;
-  padding: 0.25rem 0.42rem;
-  border-radius: 7px;
-  transition: color 180ms ease, background-color 180ms ease;
-}
-
-.nav a:hover,
-.nav a.active {
-  color: var(--text);
-  background: rgba(12, 123, 145, 0.14);
-}
 
 main {
   max-width: var(--maxw);
@@ -120,10 +82,6 @@ main {
   margin-top: var(--space-4);
 }
 
-.hero-layout {
-  display: grid;
-  gap: var(--space-3);
-}
 
 .eyebrow {
   margin: 0;
@@ -322,10 +280,6 @@ h2 {
   font-size: 1.24rem;
 }
 
-.featured {
-  border-color: #9bcad4;
-  background: linear-gradient(180deg, #f7fcff 0%, #fffdf8 100%);
-}
 
 .tags {
   display: flex;
@@ -543,46 +497,10 @@ h2 {
   }
 }
 
-/* v1.2 image visibility + sizing fix */
-body {
-  background-color: var(--bg);
-}
-
-/* Face photo sizing + crop tuning */
-.profile-chip {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 0.85rem;
-}
-
-.hero-photo {
-  width: clamp(72px, 11vw, 102px);
-  aspect-ratio: 1 / 1;
-  border-radius: 999px;
-  object-fit: cover;
-  object-position: 60% 34%;
-  border: 2px solid #38556d;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-  display: block;
-}
-
-.panel-mini {
-  margin: 0.2rem 0 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
 @media (max-width: 700px) {
   body::before {
     background-size: 100% 100%, 155vw auto;
     background-position: center center, center bottom;
-  }
-
-  .hero-photo {
-    width: 78px;
-    object-position: 58% 30%;
   }
 }
 
@@ -606,6 +524,14 @@ body {
   backdrop-filter: blur(10px);
   background: rgba(8, 14, 22, 0.68);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+  transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease, backdrop-filter 220ms ease;
+}
+
+.site-header.scrolled {
+  border-color: rgba(90, 126, 156, 0.58);
+  backdrop-filter: blur(14px);
+  background: rgba(7, 12, 20, 0.86);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
 }
 
 .brand {
@@ -749,4 +675,14 @@ body {
   .hero-avatar {
     width: min(100%, 220px);
   }
+}
+
+.dashboard-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.dashboard-card h3 {
+  margin-top: 0.45rem;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  color: var(--text);
 }

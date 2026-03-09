@@ -25,6 +25,7 @@
     <a href="#home" class="brand">Evan Gregorio</a>
     <nav class="nav" aria-label="Main navigation">
       <a href="#projects">Projects</a>
+      <a href="#dashboard">Dashboard</a>
       <a href="#stack">Stack</a>
       <a href="#timeline">Timeline</a>
       <a href="#certifications">Certifications</a>
@@ -171,6 +172,36 @@
           <div class="links">
             <a href="https://github.com/ecgregorio/hospital-logbook-system" target="_blank" rel="noreferrer">GitHub</a>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="dashboard">
+      <div class="section-head">
+        <p class="eyebrow">Live Data</p>
+        <h2>API Dashboard</h2>
+        <p class="section-lead">
+          Real-time stats pulled from my FastAPI backend.
+        </p>
+      </div>
+
+      <div class="card-grid dashboard-grid">
+        <article class="card dashboard-card">
+          <p class="project-kicker">Users</p>
+          <h3 id="stat-user-count">--</h3>
+          <p>Total users currently stored in PostgreSQL.</p>
+        </article>
+
+        <article class="card dashboard-card">
+          <p class="project-kicker">API Status</p>
+          <h3 id="stat-api-status">Checking...</h3>
+          <p id="stat-api-message">Waiting for response...</p>
+        </article>
+
+        <article class="card dashboard-card">
+          <p class="project-kicker">Last Updated (GMT+8 Manila Time)</p>
+          <h3 id="stat-generated-at">--</h3>
+          <p>Timestamp from backend stats endpoint.</p>
         </article>
       </div>
     </section>

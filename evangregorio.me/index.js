@@ -132,4 +132,77 @@
       document.body.removeChild(temp);
     });
   }
+
+  // JS fetch and render stats for live stats on root (evangregorio.me)
+  function getApiBaseUrl() {
+    var host = window.location.hostname;
+
+    if (host === "staging.evangregorio.me") {
+      return "https://staging-api.evangregorio.me";
+    }
+
+    return "https://api.evangregorio.me";
+  }
+
+  function formatUtc(isoString) {
+    var date = new Date(isoString);
+    if (isNaN(date.getTime())) {
+      return isoString;
+    }
+    return date.toISOString().replace("T", " ").replace("Z", " UTC");
+  }
+
+  function loadDashboardStats() {
+    var userCountNode = document.getElementById("stat-user-count");
+    var apiStatusNode = document.getElementById("stat-api-status");
+    var apiMessageNode = document.getElementById("stat-api-message");
+    var generatedAtNode = document.getElementById("stat-generated-at");
+
+    if (!userCountNode || !apiStatusNode || !apiMessageNode || !generatedAtNode) {
+      return;
+    }
+
+    var statsUrl = getApiBaseUrl() + "/stats";
+
+    fetch(statsUrl, { method: "GET" })
+      .then(function (res) {
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+        return res.json();
+      })
+      .then(function (data) {
+        userCountNode.textContent = String(data.user_count);
+        apiStatusNode.textContent = (data.api_status || "ok").toUpperCase();
+        apiMessageNode.textContent = "Stats endpoint responding normally.";
+        generatedAtNode.textContent = formatUtc(data.generated_at || "");
+
+        // --- readable UTC+8 format --- 
+        if (data.generated_at) {
+          var date = new Date(data.generated_at);
+          
+          // Formats to: "Mar 10, 2026, 4:15 PM" in UTC+8
+          generatedAtNode.textContent = date.toLocaleString('en-US', {
+            timeZone: 'Asia/Singapore', // forces UTC+8
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+          });
+        } else {
+          generatedAtNode.textContent = "Never";
+        }
+        // ---------------
+      })
+      .catch(function (err) {
+        userCountNode.textContent = "--";
+        apiStatusNode.textContent = "DOWN";
+        apiMessageNode.textContent = "Could not fetch stats: " + err.message;
+        generatedAtNode.textContent = "--";
+      });
+  }
+
+  loadDashboardStats();
 })();

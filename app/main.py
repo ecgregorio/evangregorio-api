@@ -1,10 +1,25 @@
+from datetime import datetime, timezone
+
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from .database import engine, SessionLocal
 from .models import Base, User
 
 app = FastAPI()
+
+# CORS middleware
+app.add_middleware(
+	CORSMiddleware,
+	allow_origins=[
+		"https://evangregorio.me",
+		"https://staging.evangregorio.me"
+	],
+	allow_credentials=False,
+	allow_methods=["GET", "POST"],
+	allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 
@@ -38,3 +53,14 @@ def create_user(name: str, email: str, db: Session = Depends(get_db)):
 def get_users(db: Session = Depends(get_db)):
 	users = db.query(User).all()
 	return users
+
+# GET stats endpoint
+@app.get("/stats")
+def get_stats(db: Session = Depends(get_db)):
+	user_count = db.query(User).count()
+ 
+	return {
+		"user_count": user_count,
+		"api_status": "ok",
+		"generated_at": datetime.now(timezone.utc).isoformat(),
+	}
