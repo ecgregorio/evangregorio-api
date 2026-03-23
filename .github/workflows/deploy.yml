@@ -71,8 +71,8 @@ jobs:
               exit 1
             fi
 
-            $DC -f docker-compose.yml -f docker-compose.staging.yml up -d --build
-            $DC -f docker-compose.yml -f docker-compose.staging.yml ps
+            $DC -p staging -f docker-compose.yml -f docker-compose.staging.yml up -d --build
+            $DC -p staging -f docker-compose.yml -f docker-compose.staging.yml ps
 
             FRONTEND_SRC="$REPO_DIR/evangregorio.me/"
             if [ ! -d "$FRONTEND_SRC" ]; then
@@ -198,8 +198,8 @@ jobs:
               exit 1
             fi
 
-            $DC -f docker-compose.yml -f docker-compose.production.yml up -d --build
-            $DC -f docker-compose.yml -f docker-compose.production.yml ps
+            $DC -p prod -f docker-compose.yml -f docker-compose.production.yml up -d --build
+            $DC -p prod -f docker-compose.yml -f docker-compose.production.yml ps
 
             FRONTEND_SRC="$REPO_DIR/evangregorio.me/"
             if [ ! -d "$FRONTEND_SRC" ]; then
